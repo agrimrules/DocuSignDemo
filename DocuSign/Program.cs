@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DocuSign
 {
-    class Program
+    public class Program
     {
         private static string[] HOT = { null, "sandals", "sun visor", null, "T-shirt", null, "shorts", "leaving house", "Removing PJ's" };
         private static string[] COLD = { null, "boots", "hats", "socks", "shirt", "jacket", "pants", "leaving house", "Removing PJ's" };
@@ -15,6 +15,7 @@ namespace DocuSign
             //PintOutput(INPUT);
         }
 
+        //If the first step is not Removing PJ's we print failure.
         private void Rule1(string [] arr)
         {
             if(arr[1] != "8")
@@ -23,7 +24,8 @@ namespace DocuSign
             }
         }
 
-        private int Rule2(string[] arr)
+        //If no instruction is repeating return -1 or else return index of repeating element.
+        public int Rule2(string[] arr)
         {
             List<string> val = new List<string>();
             foreach (string s in arr)
@@ -38,14 +40,22 @@ namespace DocuSign
             return -1;
         }
 
-        private int Rule5and6 (string[] arr)
+        public int Rule5and6 (string[] arr)
         {
             int pantIndex = Array.FindIndex(arr, row => row.Contains("6"));
             int socksIndex = Array.FindIndex(arr, row => row.Contains("3"));
             int shoeIndex = Array.FindIndex(arr, row => row.Contains("1"));
             if(pantIndex > shoeIndex || socksIndex > shoeIndex)
             {
-                if(pantIndex < socksIndex)
+                if(pantIndex < socksIndex && socksIndex != -1)
+                {
+                    return pantIndex;
+                }
+                else if(socksIndex < pantIndex && socksIndex != -1)
+                {
+                return socksIndex;
+                }
+                else if(socksIndex == -1)
                 {
                     return pantIndex;
                 }
@@ -54,17 +64,20 @@ namespace DocuSign
             return -1;
         }
 
-        private int Rule7(string[] arr)
+        public int Rule7(string[] arr)
         {
             int shirtIndex = Array.FindIndex(arr, row => row.Contains("4"));
             int headIndex = Array.FindIndex(arr, row => row.Contains("2"));
             int JackIndex = Array.FindIndex(arr, row => row.Contains("5"));
-            if (shirtIndex > headIndex || shirtIndex > JackIndex) {
+            if (shirtIndex > headIndex || shirtIndex > JackIndex && JackIndex !=-1) {
                 if(headIndex > JackIndex)
+                {
+                    return JackIndex;
+                }
+                else if(JackIndex == -1 && shirtIndex > JackIndex)
                 {
                     return headIndex;
                 }
-                return JackIndex;
             }
             return -1;
         }
