@@ -55,14 +55,14 @@ namespace DocuSign.Tests
         [TestMethod()]
         public void Rule7Test()
         {
-            string[] INPUTSuccess = { "HOT", "8", "1", "2","6","4","7" };
-            string[] INPUTFailhead = { "HOT", "8", "4", "6", "1", "2", "7" };
+            string[] INPUTSuccess = { "HOT", "8", "6","4", "2","1","7" };
+            string[] INPUTFailhead = { "HOT", "8", "2", "6", "1", "4", "7" };
             string[] INPUTFailJacket = { "COLD", "8", "6", "3", "5", "4", "2", "1", "7" };
             int resSuccess = Program.Rule7(INPUTSuccess);
             int resFailhead = Program.Rule7(INPUTFailhead);
             int resFailJack = Program.Rule7(INPUTFailJacket);
             Assert.AreEqual(resSuccess, -1);
-            Assert.AreEqual(resFailhead, 5);
+            Assert.AreEqual(resFailhead, 2);
             Assert.AreEqual(resFailJack, 4);
         }
 
