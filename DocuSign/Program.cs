@@ -9,6 +9,7 @@ namespace DocuSign
         private static string[] HOT = { null, "sandals", "sun visor", null, "T-shirt", null, "shorts", "leaving house", "Removing PJ's" };
         private static string[] COLD = { null, "boots", "hats", "socks", "shirt", "jacket", "pants", "leaving house", "Removing PJ's" };
         private static string[] INPUT = { "HOT", "8", "6", "4", "2", "1", "7" };
+        private static string[] ALL = { "1", "2","3","4","5","6","7","8"};
         static void Main(string[] args)
         { 
             //Console.WriteLine(isValid);
@@ -69,37 +70,51 @@ namespace DocuSign
             int shirtIndex = Array.FindIndex(arr, row => row.Contains("4"));
             int headIndex = Array.FindIndex(arr, row => row.Contains("2"));
             int JackIndex = Array.FindIndex(arr, row => row.Contains("5"));
-            if (shirtIndex > headIndex || shirtIndex > JackIndex && JackIndex !=-1) {
-                if(headIndex > JackIndex)
+            if (shirtIndex > headIndex || shirtIndex > JackIndex) {
+                if (headIndex > JackIndex && JackIndex != -1)
                 {
                     return JackIndex;
                 }
-                else if(JackIndex == -1 && shirtIndex > JackIndex)
+                else if (JackIndex != -1 && shirtIndex > headIndex)
                 {
                     return headIndex;
                 }
+                else if (JackIndex == -1)
+                {
+                    return headIndex;
+                }
+                return JackIndex;
             }
             return -1;
         }
 
-        private int Rule8(string[] arr)
+        public int Rule8(string[] arr)
         {
             int leavingIndex = Array.FindIndex(arr, row => row.Contains("7"));
-            if (leavingIndex < arr.Length)
+            if (leavingIndex < arr.Length -1)
             {
-                return leavingIndex - 1;
+                return leavingIndex;
             }
             return -1;
         }
 
-        private int Rule9(string[] arr)
+        public int Rule9(string[] arr)
         {
-            var res = arr.Where(p => !HOT.Any() | !COLD.Any());
-            if (res != null)
+            for(int i = 1;i<arr.Length;i++)
             {
-            return Array.IndexOf(arr,res);
+            if(!ALL.Contains(arr[i]))
+            {
+                    return i;
+            }
             }
             return -1;
+
+            //var res = arr.Where(p => !HOT.Any() | !COLD.Any());
+            //if (res != null)
+            //{
+            //return Array.IndexOf(arr,res);
+            //}
+            //return -1;
         }
 
         private static void PintOutput(string[] a, int Failat)
